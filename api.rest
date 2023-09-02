@@ -1,0 +1,21 @@
+### HELLO ROUTE
+GET http://localhost:8080/api/greeting/hello?name=Harini
+Content-Type: application/json
+
+
+### DAILY WEATHER ROUTE
+GET http://localhost:8080/api/weather?latitude=57.7072&longitude=11.9668&hourly=temperature_2m
+Content-Type: application/json
+
+
+### DAILY WEATHER ROUTE
+POST http://localhost:8080/api/weather
+Content-Type: application/json
+
+{
+    "latitude": "57.40521",
+    "longitude": "11.973724",
+    "hourly": "temperature_2m"
+}
+
+
