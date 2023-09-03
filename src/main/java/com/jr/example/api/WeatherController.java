@@ -39,10 +39,6 @@ public class WeatherController {
         double longitude = locationRequest.getLongitude();
         String hourly = locationRequest.getHourly();
         // Optional<String> timezone = locationRequest.getTimezone();
-        System.out.println("====================================================================");
-        System.out.println(String.format("%s %s %s", latitude, longitude, hourly));
-        System.out.println("====================================================================");
-
         return weatherService.getWeatherForecast(latitude, longitude, hourly);
     }
 }

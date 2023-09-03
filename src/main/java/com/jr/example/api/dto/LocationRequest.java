@@ -9,6 +9,13 @@ public class LocationRequest {
     // private Optional<String> daily;
     private Optional<String> timezone;
 
+    // Constructor
+    public LocationRequest(double latitude, double longitude, String hourly)
+    {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.hourly = hourly;
+    }
 
     public double getLatitude() {
         return latitude;
