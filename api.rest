@@ -14,8 +14,7 @@ Content-Type: application/json
 
 {
     "latitude": "57.40521",
-    "longitude": "11.973724",
-    "hourly": "temperature_2m"
+    "longitude": "11.973724"
 }
 
 

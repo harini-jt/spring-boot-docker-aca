@@ -1,8 +1,7 @@
 package com.jr.example.api.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.jr.example.api.dto.WeatherResponseDTO;
@@ -18,33 +17,18 @@ public class WeatherService {
         this.webClient = WebClient.create("https://api.open-meteo.com/v1/");
     }
 
-    public Mono<WeatherResponseDTO> getWeatherForecast(double latitude, double longitude, String hourly) {
+    public Mono<WeatherResponseDTO> getWeatherForecast(Double latitude, Double longitude) {
+        Assert.notNull(latitude, "Input params cannot be null for method getWeatherForecast(Double latitude, Double longitude)");
+        Assert.notNull(longitude, "Input params cannot be null for method getWeatherForecast(Double latitude, Double longitude)");
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("forecast")
                         .queryParam("latitude", latitude)
                         .queryParam("longitude", longitude)
-                        .queryParam("hourly", hourly)
+                        .queryParam("hourly", "temperature_2m")
                         .build())
                 .retrieve()
                 .bodyToMono(WeatherResponseDTO.class);
     }
+
 }
-
-// public class WeatherService {
-   
-//     public Mono<WeatherResponse> sayHi(String name){
-//         Assert.notNull(name, "Input param 'name' cannot be null for method sayHello(String name)");
-//         String url = "https://api.open-meteo.com/v1/forecast?latitude=57.7072&longitude=11.9668&hourly=temperature_2m";
-//         WebClient.Builder builder = WebClient.builder();
-//         Mono<String> response = builder.build().get().uri(url).retrieve().bodyToMono(String.class);
-
-        
-        
-//         return Mono.just(WeatherResponse.builder()
-//                                 .latitude("57.7072")
-//                                 .longitude("11.9668")
-//                                 .timezone("GMT")
-//                                 .build());
-//     } 
-// }

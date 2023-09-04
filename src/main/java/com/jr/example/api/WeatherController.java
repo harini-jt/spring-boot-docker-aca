@@ -25,20 +25,17 @@ public class WeatherController {
     @GetMapping("/weather")
     public Mono<WeatherResponseDTO> getWeather(
             @RequestParam("latitude") double latitude,
-            @RequestParam("longitude") double longitude,
-            @RequestParam("hourly") String hourly) {     
-        return weatherService.getWeatherForecast(latitude, longitude, hourly);
+            @RequestParam("longitude") double longitude) {     
+        return weatherService.getWeatherForecast(latitude, longitude);
 
     }
 
     @PostMapping("/weather")
     public Mono<WeatherResponseDTO> weather(
-            @RequestBody LocationRequest locationRequest 
+        @RequestBody LocationRequest locationRequest 
     ) {
-        double latitude = locationRequest.getLatitude();
-        double longitude = locationRequest.getLongitude();
-        String hourly = locationRequest.getHourly();
-        // Optional<String> timezone = locationRequest.getTimezone();
-        return weatherService.getWeatherForecast(latitude, longitude, hourly);
+        Double latitude = locationRequest.getLatitude();
+        Double longitude = locationRequest.getLongitude();
+        return weatherService.getWeatherForecast(latitude, longitude);
     }
 }
