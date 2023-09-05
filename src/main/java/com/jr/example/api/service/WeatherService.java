@@ -5,6 +5,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.jr.example.api.dto.WeatherResponseDTO;
+import com.jr.example.api.exceptions.CustomException;
 
 import reactor.core.publisher.Mono;
 
@@ -20,6 +21,9 @@ public class WeatherService {
     public Mono<WeatherResponseDTO> getWeatherForecast(Double latitude, Double longitude) {
         Assert.notNull(latitude, "Input params cannot be null for method getWeatherForecast(Double latitude, Double longitude)");
         Assert.notNull(longitude, "Input params cannot be null for method getWeatherForecast(Double latitude, Double longitude)");
+        if (latitude > 90 || latitude < -90 || longitude > 180 || longitude < -1800) {
+            throw new CustomException("Invalid range of latitude or longitude value. Latitude must be in range of -90 to 90\u00B0. Longitude must be in range of -180 to 180\u00B0");
+        }
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("forecast")

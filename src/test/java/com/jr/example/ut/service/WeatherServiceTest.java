@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.jr.example.api.exceptions.CustomException;
 import com.jr.example.api.service.WeatherService;
 
 public class WeatherServiceTest {
@@ -22,6 +23,28 @@ public class WeatherServiceTest {
             weatherService.getWeatherForecast(null, null);
         });
         String expectedMessage = "Input params cannot be null for method getWeatherForecast(Double latitude, Double longitude)";
+        System.out.println(ex.getMessage());
+        assertTrue(ex.getMessage().contains(expectedMessage));
+    }
+
+    @Test
+    public void testWithInvalidLatitude()
+    {
+        Exception ex = assertThrows(CustomException.class, ()-> {
+            weatherService.getWeatherForecast(99.00, 9.99);
+        });
+        String expectedMessage = "Invalid range of latitude or longitude value. Latitude must be in range of -90 to 90\u00B0. Longitude must be in range of -180 to 180\u00B0";
+        System.out.println(ex.getMessage());
+        assertTrue(ex.getMessage().contains(expectedMessage));
+    }
+
+    @Test
+    public void testWithInvalidLongitude()
+    {
+        Exception ex = assertThrows(CustomException.class, ()-> {
+            weatherService.getWeatherForecast(90.00, 180.99);
+        });
+        String expectedMessage = "Invalid range of latitude or longitude value. Latitude must be in range of -90 to 90\u00B0. Longitude must be in range of -180 to 180\u00B0";
         System.out.println(ex.getMessage());
         assertTrue(ex.getMessage().contains(expectedMessage));
     }
