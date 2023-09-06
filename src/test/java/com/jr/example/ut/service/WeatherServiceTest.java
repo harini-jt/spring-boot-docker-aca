@@ -28,7 +28,7 @@ public class WeatherServiceTest {
     }
 
     @Test
-    public void testWithInvalidLatitude()
+    public void testWithOutOfRangeLatitude()
     {
         Exception ex = assertThrows(CustomException.class, ()-> {
             weatherService.getWeatherForecast(99.00, 9.99);
@@ -39,7 +39,7 @@ public class WeatherServiceTest {
     }
 
     @Test
-    public void testWithInvalidLongitude()
+    public void testWithOutOfRangeLongitude()
     {
         Exception ex = assertThrows(CustomException.class, ()-> {
             weatherService.getWeatherForecast(90.00, 180.99);
