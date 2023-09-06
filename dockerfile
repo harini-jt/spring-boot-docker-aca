@@ -36,3 +36,19 @@ WORKDIR /springboot-app
 # copy over the built artifact from the maven image
 COPY --from=stage1 /build/target/sb-docker-aca-*.jar /springboot-app/app.jar
 ENTRYPOINT java -Djava.security.egd=file:/dev/./urandom -jar /springboot-app/app.jar
+
+# ------------------------ Stage 3 (Test Stage) -----------------------
+# Create a lightweight image for running tests
+FROM openjdk:17-oraclelinux8 as test
+
+# Set the working directory for tests
+WORKDIR /test
+
+# Copy the JAR file from the previous stage
+COPY --from=stage1 /build/target/sb-docker-aca-*.jar /test/app.jar
+
+# Run test command
+CMD [".\mvnw", "test", "-f", ".\pom.xml"]
+
+
+# ----------------------- End of Dockerfile -----------------------
